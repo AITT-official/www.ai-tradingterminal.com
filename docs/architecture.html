@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - AITT Documentation</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .docs-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .docs-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .docs-content h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .docs-content p, .docs-content li {
+            color: var(--gray-text);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .architecture-diagram {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+            color: var(--gray-text);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1>AITT</h1>
+                <span class="logo-subtitle">AI Trading Terminal</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#docs">Docs</a></li>
+                <li><a href="https://github.com/AITT-official" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="docs-container">
+        <a href="/" class="back-link">← Back to Home</a>
+        
+        <div class="docs-content">
+            <h1>AITT Architecture</h1>
+            
+            <h2>Overview</h2>
+            <p>
+                AITT is built with an offline-first architecture, ensuring that core functionality remains
+                available even without an internet connection. This design philosophy prioritizes reliability
+                and user experience above all else.
+            </p>
+
+            <h2>Offline-First Design</h2>
+            <p>
+                The offline-first approach means that AITT is designed to work offline by default, with online
+                connectivity treated as an enhancement rather than a requirement. This is achieved through:
+            </p>
+            <ul>
+                <li><strong>Service Workers:</strong> Cache critical resources and enable offline functionality</li>
+                <li><strong>Local Storage:</strong> Store user data and preferences on the device</li>
+                <li><strong>IndexedDB:</strong> Manage larger datasets efficiently on the client side</li>
+                <li><strong>Background Sync:</strong> Queue actions when offline and sync when connected</li>
+            </ul>
+
+            <h2>Core Components</h2>
+            
+            <h3>1. Service Worker Layer</h3>
+            <p>
+                The service worker acts as a network proxy, intercepting requests and serving cached responses
+                when available. It implements the following strategies:
+            </p>
+            <ul>
+                <li><strong>Cache First:</strong> For static assets (CSS, JS, images)</li>
+                <li><strong>Network First:</strong> For dynamic market data</li>
+                <li><strong>Stale While Revalidate:</strong> For frequently updated content</li>
+            </ul>
+
+            <h3>2. Data Layer</h3>
+            <p>
+                AITT uses a multi-tiered data storage approach:
+            </p>
+            <ul>
+                <li><strong>IndexedDB:</strong> Historical market data, user trades, and analysis results</li>
+                <li><strong>LocalStorage:</strong> User preferences and settings</li>
+                <li><strong>Memory Cache:</strong> Active trading session data</li>
+            </ul>
+
+            <h3>3. AI Processing</h3>
+            <p>
+                The AI analysis engine can operate in multiple modes:
+            </p>
+            <ul>
+                <li><strong>Local Processing:</strong> Basic analysis runs entirely on the device</li>
+                <li><strong>Cloud Enhancement:</strong> Advanced models leverage cloud computing when available</li>
+                <li><strong>Hybrid Mode:</strong> Combines local and cloud processing for optimal performance</li>
+            </ul>
+
+            <div class="architecture-diagram">
+                <pre style="text-align: left; font-family: monospace; font-size: 0.9rem;">
+┌─────────────────────────────────────────────┐
+│           User Interface (PWA)               │
+├─────────────────────────────────────────────┤
+│         Application Layer (React)            │
+├─────────────────────────────────────────────┤
+│                                              │
+│  ┌──────────────┐      ┌─────────────────┐ │
+│  │ Service      │      │  AI Processing  │ │
+│  │ Worker       │◄────►│  Engine         │ │
+│  └──────────────┘      └─────────────────┘ │
+│         ▲                       ▲           │
+│         │                       │           │
+│  ┌──────▼──────┐        ┌──────▼────────┐  │
+│  │   Cache     │        │  Local Data   │  │
+│  │  Storage    │        │   Storage     │  │
+│  └─────────────┘        └───────────────┘  │
+│                                              │
+├─────────────────────────────────────────────┤
+│      Network Layer (Conditional)             │
+└─────────────────────────────────────────────┘
+                </pre>
+            </div>
+
+            <h2>Progressive Web App (PWA)</h2>
+            <p>
+                AITT is built as a Progressive Web App, providing:
+            </p>
+            <ul>
+                <li><strong>Installability:</strong> Can be installed on any device</li>
+                <li><strong>App-like Experience:</strong> Runs in standalone mode without browser UI</li>
+                <li><strong>Automatic Updates:</strong> Service worker updates in the background</li>
+                <li><strong>Cross-Platform:</strong> Works on desktop and mobile devices</li>
+            </ul>
+
+            <h2>Security Considerations</h2>
+            <p>
+                Security is paramount in a trading application:
+            </p>
+            <ul>
+                <li><strong>HTTPS Only:</strong> All connections use secure protocols</li>
+                <li><strong>Local-First Data:</strong> Sensitive data never leaves the device unnecessarily</li>
+                <li><strong>Encrypted Storage:</strong> Local data is encrypted at rest</li>
+                <li><strong>No Third-Party Trackers:</strong> Privacy-focused design</li>
+            </ul>
+
+            <h2>Performance Optimization</h2>
+            <p>
+                AITT is optimized for performance through:
+            </p>
+            <ul>
+                <li><strong>Code Splitting:</strong> Load only necessary code</li>
+                <li><strong>Lazy Loading:</strong> Defer non-critical resources</li>
+                <li><strong>Asset Optimization:</strong> Minified and compressed assets</li>
+                <li><strong>Efficient Caching:</strong> Smart cache strategies reduce load times</li>
+            </ul>
+
+            <h2>Technology Stack</h2>
+            <ul>
+                <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript (expandable to React/Vue)</li>
+                <li><strong>PWA:</strong> Service Workers, Web App Manifest, Cache API</li>
+                <li><strong>Storage:</strong> IndexedDB, LocalStorage</li>
+                <li><strong>AI/ML:</strong> TensorFlow.js for local processing</li>
+                <li><strong>Build Tools:</strong> Webpack, Babel (as needed)</li>
+            </ul>
+
+            <h2>Future Enhancements</h2>
+            <p>
+                Planned architectural improvements include:
+            </p>
+            <ul>
+                <li>WebAssembly integration for faster AI processing</li>
+                <li>Peer-to-peer data synchronization</li>
+                <li>Advanced background sync capabilities</li>
+                <li>Native desktop application using Electron or Tauri</li>
+            </ul>
+
+            <h2>Contributing</h2>
+            <p>
+                AITT is open source! To contribute to the architecture:
+            </p>
+            <ul>
+                <li>Review the <a href="https://github.com/AITT-official" style="color: var(--primary-color);">GitHub repository</a></li>
+                <li>Submit architectural proposals via GitHub Issues</li>
+                <li>Join discussions in the community forum</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 AITT Official. Open Source Project.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - AITT Documentation</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .docs-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .docs-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .docs-content h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .docs-content p, .docs-content li {
+            color: var(--gray-text);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .docs-content code {
+            background-color: var(--card-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #42c196;
+        }
+        .docs-content pre {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .docs-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1>AITT</h1>
+                <span class="logo-subtitle">AI Trading Terminal</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#docs">Docs</a></li>
+                <li><a href="https://github.com/AITT-official" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="docs-container">
+        <a href="/" class="back-link">← Back to Home</a>
+        
+        <div class="docs-content">
+            <h1>Getting Started with AITT</h1>
+            
+            <h2>Introduction</h2>
+            <p>
+                Welcome to AITT (AI Trading Terminal)! This guide will help you get started with the platform
+                and understand its core features. AITT is designed as an offline-first application, meaning it
+                works seamlessly whether you're online or offline.
+            </p>
+
+            <h2>Installation</h2>
+            <p>AITT can be accessed in multiple ways:</p>
+            <ul>
+                <li><strong>Web Browser:</strong> Simply visit <a href="https://www.ai-tradingterminal.com" style="color: var(--primary-color);">www.ai-tradingterminal.com</a></li>
+                <li><strong>Progressive Web App (PWA):</strong> Install AITT as a PWA for offline access and a native app-like experience</li>
+                <li><strong>Desktop Application:</strong> Coming soon</li>
+            </ul>
+
+            <h2>Installing as a PWA</h2>
+            <p>To install AITT as a Progressive Web App:</p>
+            <ol style="color: var(--gray-text); line-height: 1.8;">
+                <li>Visit the website in a supported browser (Chrome, Edge, Safari, Firefox)</li>
+                <li>Look for the "Install" or "Add to Home Screen" prompt</li>
+                <li>Click "Install" and follow the prompts</li>
+                <li>Launch AITT from your home screen or app drawer</li>
+            </ol>
+
+            <h2>First Steps</h2>
+            <p>Once you have AITT open:</p>
+            <ol style="color: var(--gray-text); line-height: 1.8;">
+                <li><strong>Explore the Dashboard:</strong> Familiarize yourself with the main interface</li>
+                <li><strong>Connect Data Sources:</strong> Set up your market data connections</li>
+                <li><strong>Configure Settings:</strong> Customize AITT to match your trading preferences</li>
+                <li><strong>Test Offline Mode:</strong> Disable your internet connection to see offline functionality</li>
+            </ol>
+
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>AI-Powered Analysis:</strong> Get intelligent insights on market trends</li>
+                <li><strong>Offline-First:</strong> All core features work without an internet connection</li>
+                <li><strong>Real-Time Updates:</strong> When online, receive live market data</li>
+                <li><strong>Secure:</strong> Your data stays on your device</li>
+            </ul>
+
+            <h2>System Requirements</h2>
+            <p>AITT is designed to run on modern web browsers:</p>
+            <ul>
+                <li>Chrome 90 or later</li>
+                <li>Firefox 88 or later</li>
+                <li>Safari 14 or later</li>
+                <li>Edge 90 or later</li>
+            </ul>
+
+            <h2>Offline Mode</h2>
+            <p>
+                AITT uses service workers to cache essential resources, allowing the application to function
+                even when you don't have an internet connection. Historical data and previously loaded information
+                will remain accessible offline.
+            </p>
+
+            <h2>Need Help?</h2>
+            <p>
+                If you encounter any issues or have questions:
+            </p>
+            <ul>
+                <li>Check our <a href="https://github.com/AITT-official/www.ai-tradingterminal.com/issues" style="color: var(--primary-color);">GitHub Issues</a></li>
+                <li>Visit the <a href="https://github.com/AITT-official/www.ai-tradingterminal.com/discussions" style="color: var(--primary-color);">Discussions</a> forum</li>
+                <li>Review the <a href="api.html" style="color: var(--primary-color);">API Documentation</a></li>
+            </ul>
+
+            <h2>Next Steps</h2>
+            <p>
+                Now that you're set up, explore:
+            </p>
+            <ul>
+                <li><a href="api.html" style="color: var(--primary-color);">API Reference</a> - Learn about the API</li>
+                <li><a href="architecture.html" style="color: var(--primary-color);">Architecture</a> - Understand how AITT works</li>
+                <li><a href="https://github.com/AITT-official" style="color: var(--primary-color);">GitHub</a> - Contribute to the project</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 AITT Official. Open Source Project.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
