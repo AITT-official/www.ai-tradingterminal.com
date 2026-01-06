@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - AITT Documentation</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .docs-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .docs-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .docs-content h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .docs-content h3 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--light-text);
+        }
+        .docs-content p, .docs-content li {
+            color: var(--gray-text);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .docs-content code {
+            background-color: var(--card-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #42c196;
+        }
+        .docs-content pre {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .docs-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .api-endpoint {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+        .method-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        .get { background-color: #42c196; color: white; }
+        .post { background-color: #667eea; color: white; }
+        .put { background-color: #f5576c; color: white; }
+        .delete { background-color: #ff6b6b; color: white; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1>AITT</h1>
+                <span class="logo-subtitle">AI Trading Terminal</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#docs">Docs</a></li>
+                <li><a href="https://github.com/AITT-official" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="docs-container">
+        <a href="/" class="back-link">← Back to Home</a>
+        
+        <div class="docs-content">
+            <h1>API Reference</h1>
+            
+            <h2>Overview</h2>
+            <p>
+                The AITT API provides programmatic access to trading data, AI analysis, and platform features.
+                This reference documents the available endpoints and how to use them.
+            </p>
+
+            <h2>Authentication</h2>
+            <p>
+                All API requests require authentication using API keys. You can generate an API key from your
+                account settings.
+            </p>
+            <pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
+
+            <h2>Base URL</h2>
+            <pre><code>https://api.ai-tradingterminal.com/v1</code></pre>
+
+            <h2>Market Data</h2>
+            
+            <div class="api-endpoint">
+                <h3>
+                    <span class="method-badge get">GET</span>
+                    Get Market Data
+                </h3>
+                <p><code>/markets/{symbol}</code></p>
+                <p>Retrieves current market data for a specified symbol.</p>
+                
+                <h4>Parameters:</h4>
+                <ul>
+                    <li><code>symbol</code> (required): Trading pair or asset symbol</li>
+                    <li><code>interval</code> (optional): Time interval (1m, 5m, 1h, 1d)</li>
+                </ul>
+
+                <h4>Example Request:</h4>
+                <pre><code>GET /markets/BTC-USD?interval=1h</code></pre>
+
+                <h4>Example Response:</h4>
+                <pre><code>{
+  "symbol": "BTC-USD",
+  "price": 45000.00,
+  "change_24h": 2.5,
+  "volume_24h": 1250000000,
+  "timestamp": "2026-01-06T14:28:09Z"
+}</code></pre>
+            </div>
+
+            <div class="api-endpoint">
+                <h3>
+                    <span class="method-badge get">GET</span>
+                    Get Historical Data
+                </h3>
+                <p><code>/markets/{symbol}/history</code></p>
+                <p>Retrieves historical market data for analysis.</p>
+                
+                <h4>Parameters:</h4>
+                <ul>
+                    <li><code>symbol</code> (required): Trading pair or asset symbol</li>
+                    <li><code>from</code> (required): Start timestamp (ISO 8601)</li>
+                    <li><code>to</code> (required): End timestamp (ISO 8601)</li>
+                    <li><code>interval</code> (optional): Data granularity</li>
+                </ul>
+            </div>
+
+            <h2>AI Analysis</h2>
+            
+            <div class="api-endpoint">
+                <h3>
+                    <span class="method-badge post">POST</span>
+                    Request AI Analysis
+                </h3>
+                <p><code>/analysis/predict</code></p>
+                <p>Requests AI-powered market analysis and predictions.</p>
+                
+                <h4>Request Body:</h4>
+                <pre><code>{
+  "symbol": "BTC-USD",
+  "timeframe": "1h",
+  "indicators": ["RSI", "MACD", "EMA"],
+  "model": "standard"
+}</code></pre>
+
+                <h4>Response:</h4>
+                <pre><code>{
+  "prediction": "bullish",
+  "confidence": 0.78,
+  "signals": [
+    {
+      "indicator": "RSI",
+      "value": 65,
+      "signal": "neutral"
+    },
+    {
+      "indicator": "MACD",
+      "value": 120.5,
+      "signal": "buy"
+    }
+  ],
+  "timestamp": "2026-01-06T14:28:09Z"
+}</code></pre>
+            </div>
+
+            <h2>Portfolio Management</h2>
+            
+            <div class="api-endpoint">
+                <h3>
+                    <span class="method-badge get">GET</span>
+                    Get Portfolio
+                </h3>
+                <p><code>/portfolio</code></p>
+                <p>Retrieves current portfolio holdings and performance.</p>
+                
+                <h4>Example Response:</h4>
+                <pre><code>{
+  "total_value": 100000.00,
+  "holdings": [
+    {
+      "symbol": "BTC",
+      "amount": 2.5,
+      "value": 112500.00,
+      "cost_basis": 100000.00,
+      "profit_loss": 12500.00
+    }
+  ],
+  "performance": {
+    "day": 2.5,
+    "week": 5.2,
+    "month": 12.8
+  }
+}</code></pre>
+            </div>
+
+            <div class="api-endpoint">
+                <h3>
+                    <span class="method-badge post">POST</span>
+                    Execute Trade
+                </h3>
+                <p><code>/trades</code></p>
+                <p>Executes a trading order.</p>
+                
+                <h4>Request Body:</h4>
+                <pre><code>{
+  "symbol": "BTC-USD",
+  "side": "buy",
+  "type": "market",
+  "amount": 0.5
+}</code></pre>
+            </div>
+
+            <h2>Offline Data</h2>
+            
+            <div class="api-endpoint">
+                <h3>
+                    <span class="method-badge get">GET</span>
+                    Sync Offline Data
+                </h3>
+                <p><code>/sync</code></p>
+                <p>Synchronizes locally cached data with the server.</p>
+                
+                <h4>Parameters:</h4>
+                <ul>
+                    <li><code>last_sync</code> (required): Last synchronization timestamp</li>
+                    <li><code>entity</code> (optional): Specific entity to sync (trades, portfolio, analysis)</li>
+                </ul>
+            </div>
+
+            <h2>Rate Limits</h2>
+            <p>
+                API requests are rate limited to ensure fair usage:
+            </p>
+            <ul>
+                <li><strong>Public endpoints:</strong> 100 requests per minute</li>
+                <li><strong>Authenticated endpoints:</strong> 500 requests per minute</li>
+                <li><strong>Trading endpoints:</strong> 50 requests per minute</li>
+            </ul>
+
+            <h2>Error Handling</h2>
+            <p>
+                The API uses standard HTTP status codes and returns error details in JSON format:
+            </p>
+            <pre><code>{
+  "error": {
+    "code": "INVALID_SYMBOL",
+    "message": "The specified symbol is not supported",
+    "details": "BTC-USDT is not available on this exchange"
+  }
+}</code></pre>
+
+            <h3>Common Error Codes:</h3>
+            <ul>
+                <li><code>400</code> - Bad Request: Invalid parameters</li>
+                <li><code>401</code> - Unauthorized: Invalid or missing API key</li>
+                <li><code>403</code> - Forbidden: Insufficient permissions</li>
+                <li><code>404</code> - Not Found: Resource not found</li>
+                <li><code>429</code> - Too Many Requests: Rate limit exceeded</li>
+                <li><code>500</code> - Internal Server Error: Server error</li>
+            </ul>
+
+            <h2>WebSocket API</h2>
+            <p>
+                For real-time data, use the WebSocket API:
+            </p>
+            <pre><code>wss://api.ai-tradingterminal.com/ws</code></pre>
+
+            <h3>Subscribe to Market Updates:</h3>
+            <pre><code>{
+  "action": "subscribe",
+  "channel": "market",
+  "symbol": "BTC-USD"
+}</code></pre>
+
+            <h2>SDK Libraries</h2>
+            <p>
+                Official SDKs are available for popular programming languages:
+            </p>
+            <ul>
+                <li><strong>JavaScript/TypeScript:</strong> <code>npm install @aitt/sdk</code></li>
+                <li><strong>Python:</strong> <code>pip install aitt-sdk</code></li>
+                <li><strong>Go:</strong> <code>go get github.com/AITT-official/aitt-go</code></li>
+            </ul>
+
+            <h2>Need Help?</h2>
+            <p>
+                For additional support:
+            </p>
+            <ul>
+                <li>Visit the <a href="https://github.com/AITT-official" style="color: var(--primary-color);">GitHub repository</a></li>
+                <li>Join the <a href="https://github.com/AITT-official/www.ai-tradingterminal.com/discussions" style="color: var(--primary-color);">community discussions</a></li>
+                <li>Report issues on <a href="https://github.com/AITT-official/www.ai-tradingterminal.com/issues" style="color: var(--primary-color);">GitHub</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 AITT Official. Open Source Project.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
