@@ -103,9 +103,20 @@ window.addEventListener('appinstalled', () => {
 
 // Handle cache updates
 if ('serviceWorker' in navigator) {
+    let refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('Service Worker controller changed, reloading...');
-        window.location.reload();
+        if (refreshing) return;
+        refreshing = true;
+        
+        // Show update notification instead of forcing reload
+        const updateBanner = document.createElement('div');
+        updateBanner.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background-color: var(--primary-color); color: white; padding: 1rem; text-align: center; z-index: 10000; display: flex; align-items: center; justify-content: center; gap: 1rem;';
+        updateBanner.innerHTML = `
+            <span>A new version is available!</span>
+            <button onclick="window.location.reload()" style="padding: 0.5rem 1rem; background: white; color: var(--primary-color); border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Refresh</button>
+            <button onclick="this.parentElement.remove()" style="padding: 0.5rem 1rem; background: transparent; color: white; border: 1px solid white; border-radius: 4px; cursor: pointer;">Dismiss</button>
+        `;
+        document.body.prepend(updateBanner);
     });
 }
 

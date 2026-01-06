@@ -54,11 +54,11 @@ self.addEventListener('fetch', (event) => {
 
                 return fetch(fetchRequest).then((response) => {
                     // Check if valid response
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                    if (!response || response.status !== 200) {
                         return response;
                     }
 
-                    // Clone the response
+                    // Clone the response for caching
                     const responseToCache = response.clone();
 
                     caches.open(CACHE_NAME)
@@ -68,8 +68,17 @@ self.addEventListener('fetch', (event) => {
 
                     return response;
                 }).catch((error) => {
-                    console.log('Fetch failed, serving offline page:', error);
-                    // You could return a custom offline page here
+                    console.log('Fetch failed, serving offline fallback:', error);
+                    // Return a simple offline fallback for HTML requests
+                    if (event.request.headers.get('accept').includes('text/html')) {
+                        return new Response('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Offline</title></head><body><h1>You are offline</h1><p>Please check your connection and try again.</p></body></html>', {
+                            status: 503,
+                            statusText: 'Service Unavailable',
+                            headers: new Headers({
+                                'Content-Type': 'text/html'
+                            })
+                        });
+                    }
                     return new Response('Offline - Content not available', {
                         status: 503,
                         statusText: 'Service Unavailable',
